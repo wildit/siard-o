@@ -1,0 +1,557 @@
+@prefix : <http://siard.link#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://siard.link#> .
+
+<http://siard.link#> rdf:type owl:Ontology ;
+                      <http://creativecommons.org/ns#license> "https://creativecommons.org/licenses/by/4.0" ;
+                      <http://purl.org/dc/elements/1.1/contributor> "Tobias Wildi (Fachhochschule Graubünden)" ,
+                                                                    "https://siard.link#" ;
+                      <http://purl.org/dc/terms/publisher> "https://www.wikidata.org/entity/Q679141" ;
+                      :preferredNamespaceUri "https://siard.link#" ,
+                                             "siard" ;
+                      rdfs:label "Swiss Federal Archives SIARD Ontology (SIARD-O) version 0.1, based on SIARD version 2.2." ;
+                      owl:versionInfo "Version 0.1 - 21.12.2022" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://creativecommons.org/ns#license
+<http://creativecommons.org/ns#license> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/contributor
+<http://purl.org/dc/elements/1.1/contributor> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+<http://purl.org/dc/terms/publisher> rdf:type owl:AnnotationProperty .
+
+
+###  http://siard.link#preferredNamespacePrefix
+:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  http://siard.link#preferredNamespaceUri
+:preferredNamespaceUri rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://siard.link#hasCandidateKey
+:hasCandidateKey rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :isRelatedTo ;
+                 owl:inverseOf :isCandidateKeyOf ;
+                 rdfs:domain :Table ;
+                 rdfs:range :CandidateKey ;
+                 rdfs:comment "Connects a Table to a Candidate Key" .
+
+
+###  http://siard.link#hasCell
+:hasCell rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :isRelatedTo ;
+         owl:inverseOf :isCellOf ;
+         rdfs:domain :Row ;
+         rdfs:range :Cell ;
+         rdfs:comment "Connects a Row (database record) to a Cell (value of one database field)" .
+
+
+###  http://siard.link#hasColumn
+:hasColumn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :isRelatedTo ;
+           owl:inverseOf :isColumnOf ;
+           rdfs:domain :Key ,
+                       :Table ;
+           rdfs:range :Column ;
+           rdfs:comment "Connects a Key to one or several Column(s)" ,
+                        "Connects a Table or a View to the Colums of the Table or View." .
+
+
+###  http://siard.link#hasColumnType
+:hasColumnType rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :isRelatedTo ;
+               owl:inverseOf :isColumnTypeOf ;
+               rdfs:domain :Cell ;
+               rdfs:range :Column ;
+               rdfs:comment "Connects a Cell (value of one database field) to a Column" .
+
+
+###  http://siard.link#hasForeignKey
+:hasForeignKey rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :isRelatedTo ;
+               owl:inverseOf :isForeignKeyOf ;
+               rdfs:domain :Table ;
+               rdfs:range :ForeignKey ;
+               rdfs:comment "Connects the Table to a Foreign Key, which serves a a reference to a different schema / table / column(s)" .
+
+
+###  http://siard.link#hasPrimaryKey
+:hasPrimaryKey rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :isRelatedTo ;
+               owl:inverseOf :isPrimaryKeyOf ;
+               rdfs:domain :Table ;
+               rdfs:range :PrimaryKey ;
+               rdfs:comment "Connects a Table to a Primary Key" .
+
+
+###  http://siard.link#hasRole
+:hasRole rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :isRelatedTo ;
+         owl:inverseOf :isRoleOf ;
+         rdfs:domain :SiardArchive ;
+         rdfs:range :Role ;
+         rdfs:comment "Connects a SIARD Archive to a Role" .
+
+
+###  http://siard.link#hasRow
+:hasRow rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :isRelatedTo ;
+        owl:inverseOf :isRowOf ;
+        rdfs:domain :Table ;
+        rdfs:range :Row ;
+        rdfs:comment "Connects the Table to a Row of the Table (= database record)" .
+
+
+###  http://siard.link#hasSchema
+:hasSchema rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :isRelatedTo ;
+           owl:inverseOf :isSchemaOf ;
+           rdfs:domain :ForeignKey ,
+                       :SiardArchive ;
+           rdfs:range :Schema ;
+           rdfs:comment "Connects a Foreign Key archive to a Schema" ,
+                        "Connects a SIARD archive to a Schema" .
+
+
+###  http://siard.link#hasTable
+:hasTable rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :isRelatedTo ;
+          owl:inverseOf :isTableOf ;
+          rdfs:domain :ForeignKey ,
+                      :Schema ;
+          rdfs:range :Table ;
+          rdfs:comment "Connects a Schema to the Tables that are contained in the Schema." .
+
+
+###  http://siard.link#hasUser
+:hasUser rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :isRelatedTo ;
+         owl:inverseOf :isUserOf ;
+         rdfs:domain :SiardArchive ;
+         rdfs:range :User ;
+         rdfs:comment "Connects a SIARD Archive to a User" .
+
+
+###  http://siard.link#isCandidateKeyOf
+:isCandidateKeyOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :isRelatedTo ;
+                  rdfs:domain :Column ;
+                  rdfs:range :CandidateKey ;
+                  rdfs:comment "Connects a Candidate Key to a Table" .
+
+
+###  http://siard.link#isCellOf
+:isCellOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :isRelatedTo ;
+          rdfs:domain :Cell ;
+          rdfs:range :Row ;
+          rdfs:comment "Connects a Cell (value of one database field) to a Row (database record)" .
+
+
+###  http://siard.link#isColumnOf
+:isColumnOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :isRelatedTo ;
+            rdfs:domain :Column ;
+            rdfs:range :Key ,
+                       :Table ;
+            rdfs:comment "Connects one or several Column(s) to a Key" .
+
+
+###  http://siard.link#isColumnTypeOf
+:isColumnTypeOf rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :isRelatedTo ;
+                rdfs:domain :Column ;
+                rdfs:range :Cell ;
+                rdfs:comment "Connects a Column to a Cell (value of one database field)" .
+
+
+###  http://siard.link#isForeignKeyOf
+:isForeignKeyOf rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :isRelatedTo ;
+                rdfs:domain :ForeignKey ;
+                rdfs:range :Table ;
+                rdfs:comment "Connects a Foreign Key to a Table" .
+
+
+###  http://siard.link#isPrimaryKeyOf
+:isPrimaryKeyOf rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :isRelatedTo ;
+                rdfs:domain :PrimaryKey ;
+                rdfs:range :Table ;
+                rdfs:comment "Defines the Primary Key of a Table" .
+
+
+###  http://siard.link#isReferencedColumnOf
+:isReferencedColumnOf rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :isRelatedTo ;
+                      rdfs:domain :Column ;
+                      rdfs:range :ForeignKey .
+
+
+###  http://siard.link#isRelatedTo
+:isRelatedTo rdf:type owl:ObjectProperty ;
+             rdfs:domain :Thing ;
+             rdfs:range :Thing ;
+             rdfs:comment "The most generic object property. Connects an Thing to any other Thing. This is a symmetric object property." .
+
+
+###  http://siard.link#isRoleOf
+:isRoleOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :isRelatedTo ;
+          rdfs:domain :Role ;
+          rdfs:range :SiardArchive .
+
+
+###  http://siard.link#isRowOf
+:isRowOf rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :isRelatedTo ;
+         rdfs:domain :Row ;
+         rdfs:range :Table .
+
+
+###  http://siard.link#isSchemaOf
+:isSchemaOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :isRelatedTo ;
+            rdfs:domain :Schema ;
+            rdfs:range :ForeignKey ,
+                       :SiardArchive .
+
+
+###  http://siard.link#isTableOf
+:isTableOf rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :isRelatedTo ;
+           rdfs:domain :Table ;
+           rdfs:range :ForeignKey ,
+                      :Schema .
+
+
+###  http://siard.link#isUserOf
+:isUserOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :isRelatedTo ;
+          rdfs:domain :User ;
+          rdfs:range :SiardArchive .
+
+
+###  http://siard.link#referencedColumn
+:referencedColumn rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :isRelatedTo ;
+                  rdfs:domain :ForeignKey ;
+                  rdfs:range :Column .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://siard.link#admin
+:admin rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain :Role ;
+       rdfs:comment "Administrator of the role (user or role)" .
+
+
+###  http://siard.link#archivalDate
+:archivalDate rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :SiardArchive ;
+              rdfs:comment "Date on which the table data were archived" .
+
+
+###  http://siard.link#archiver
+:archiver rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :SiardArchive ;
+          rdfs:comment "Name of the person who carried out the archiving of the table data from the database" .
+
+
+###  http://siard.link#archiverContact
+:archiverContact rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :SiardArchive ;
+                 rdfs:comment "Contact details (telephone, e-mail) of the person who carried out the archiving of the table data from the database" .
+
+
+###  http://siard.link#clientMachine
+:clientMachine rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :SiardArchive ;
+               rdfs:comment "DNS name of the (client) computer on which the archiving was carried out" .
+
+
+###  http://siard.link#connection
+:connection rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :SiardArchive ;
+            rdfs:comment "Connection string used to archive the table data" .
+
+
+###  http://siard.link#dataOriginTimespan
+:dataOriginTimespan rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :SiardArchive ;
+                    rdfs:comment "Origination period of the data in the database; approximate indication in text form" .
+
+
+###  http://siard.link#dataOwner
+:dataOwner rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :SiardArchive ;
+           rdfs:comment "Owner of the data in the database; the institution or person that, at the time of archiving, has the right to grant usage rights for the data and is responsible for compliance with legal obligations such as data protection guidelines" .
+
+
+###  http://siard.link#databaseProduct
+:databaseProduct rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :SiardArchive ;
+                 rdfs:comment "Database product and version from which the archiving of the table data was carried out" .
+
+
+###  http://siard.link#databaseUser
+:databaseUser rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :SiardArchive ;
+              rdfs:comment "Database user ID of the user of the SIARD tool for archiving the table data from the database" .
+
+
+###  http://siard.link#dbname
+:dbname rdf:type owl:DatatypeProperty ;
+        rdfs:domain :SiardArchive ;
+        rdfs:comment "Short database identifier" .
+
+
+###  http://siard.link#defaultValue
+:defaultValue rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Column ;
+              rdfs:comment "Default value of the column" .
+
+
+###  http://siard.link#deleteAction
+:deleteAction rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :ForeignKey .
+
+
+###  http://siard.link#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Thing ;
+             rdfs:comment "Description of the meaning and content" .
+
+
+###  http://siard.link#folder
+:folder rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:domain :Schema ,
+                    :Table ;
+        rdfs:comment "Name of the folder" .
+
+
+###  http://siard.link#lobFolder
+:lobFolder rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :SiardArchive ;
+           rdfs:comment "A “file:” URI representing the base URI for relative URIs indicating the possible external storage location of large objects. If it is missing, default value of the root folder inside the ZIP file is assumed. Relative lobFolder URIs in the column metadata are relative to this value." .
+
+
+###  http://siard.link#matchType
+:matchType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :ForeignKey .
+
+
+###  http://siard.link#mimeType
+:mimeType rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Column ;
+          rdfs:comment "MIME type of this column, if it is a BLOB column and all records contain files of the same MIME type in this column. This purely advisory element helps choosing the correct viewer for binary objects. It can be filled in manually or by the downloading program, which uses some format recognition mechanism." .
+
+
+###  http://siard.link#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Thing ;
+      rdfs:comment "contains both dbname and name" .
+
+
+###  http://siard.link#nullable
+:nullable rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Column ;
+          rdfs:comment "Optional entry" .
+
+
+###  http://siard.link#privilege
+:privilege rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://siard.link#producerApplication
+:producerApplication rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdfs:domain :SiardArchive ;
+                     rdfs:comment "Name and version of the application that downloaded the SIARD file." .
+
+
+###  http://siard.link#query
+:query rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain :View .
+
+
+###  http://siard.link#queryOriginal
+:queryOriginal rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :View .
+
+
+###  http://siard.link#reference
+:reference rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://siard.link#referencedSchema
+:referencedSchema rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://siard.link#referencedTable
+:referencedTable rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://siard.link#rows
+:rows rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Table ;
+      rdfs:comment "Number of datasets" .
+
+
+###  http://siard.link#type
+:type rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Column ;
+      rdfs:comment "SQL:2008 built-in data type of the column. Note: If the data type of this column is a built-in data type, this field must be used. Otherwise the field typeName must refer to a defined type in the types list." .
+
+
+###  http://siard.link#typeOriginal
+:typeOriginal rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Column ;
+              rdfs:comment "Original column type. Note: As the various database programs that describe themselves as SQL-compliant permit very different data types, the original type is listed here as well as the SQL:2008 type. A translation of the proprietary types to SQL:2008 types is to be defined and documented in the corresponding application for each database program that supports the SIARD format." .
+
+
+###  http://siard.link#updateAction
+:updateAction rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :ForeignKey .
+
+
+###  http://siard.link#version
+:version rdf:type owl:DatatypeProperty ;
+         rdfs:domain :SiardArchive ;
+         rdfs:comment "SIARD format version" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://siard.link#CandidateKey
+:CandidateKey rdf:type owl:Class ;
+              rdfs:subClassOf :Key ;
+              rdfs:comment "Candidate key is defined as a unique key that is a candidate for a primary key. Primary keys as well as candidate keys are of the same type uniqueKeyType in metadata.xsd. Therefore, the requirements for candidate keys are the same as those for primary keys." .
+
+
+###  http://siard.link#Cell
+:Cell rdf:type owl:Class ;
+      rdfs:subClassOf :Thing .
+
+
+###  http://siard.link#Column
+:Column rdf:type owl:Class ;
+        rdfs:subClassOf :Thing ;
+        rdfs:comment "A column is a set of data values of a particular type in a table. Column metadata describe a column in a table or a view." .
+
+
+###  http://siard.link#ForeignKey
+:ForeignKey rdf:type owl:Class ;
+            rdfs:subClassOf :Key ;
+            rdfs:comment "One or several foreign key(s) in the table. Foreign keys ensure referential integrity within the schema." .
+
+
+###  http://siard.link#Key
+:Key rdf:type owl:Class ;
+     rdfs:subClassOf :Thing .
+
+
+###  http://siard.link#PrimaryKey
+:PrimaryKey rdf:type owl:Class ;
+            rdfs:subClassOf :Key ;
+            rdfs:comment "Primary key is defined as a unique key that identifies a record." .
+
+
+###  http://siard.link#Role
+:Role rdf:type owl:Class ;
+      rdfs:subClassOf :Thing .
+
+
+###  http://siard.link#Routine
+:Routine rdf:type owl:Class ;
+         rdfs:subClassOf :Thing ;
+         rdfs:comment "SQL routines (also known as stored procedures) are mainly important to understanding the view queries in which they can occur as partial expressions." .
+
+
+###  http://siard.link#Row
+:Row rdf:type owl:Class ;
+     rdfs:subClassOf :Thing ;
+     rdfs:comment "A row is a single record in a table, consisting of a set of data values for each column." .
+
+
+###  http://siard.link#Schema
+:Schema rdf:type owl:Class ;
+        rdfs:subClassOf :Thing ;
+        rdfs:comment "Schemas are containers for the tables, views and routines." .
+
+
+###  http://siard.link#SiardArchive
+:SiardArchive rdf:type owl:Class ;
+              rdfs:subClassOf :Thing ;
+              rdfs:comment "A SIARD (Structured Information ARchiving and Retrieval Dataset) archive is a digital representation of a database, including its schema, data, and metadata." .
+
+
+###  http://siard.link#Table
+:Table rdf:type owl:Class ;
+       rdfs:subClassOf :Thing ;
+       rdfs:comment "Tables consist of a table definition with fields that assign a name and type to each column in the table, datasets that contain the actual table data, an optional primary key, foreign keys that ensure referential integrity, candidate keys that serve to identify a dataset, and constraints that guarantee consistency. Triggers may optionally be defined for a table." .
+
+
+###  http://siard.link#Thing
+:Thing rdf:type owl:Class ;
+       rdfs:comment "Any idea, material thing, or event within the realm of human experience." .
+
+
+###  http://siard.link#User
+:User rdf:type owl:Class ;
+      rdfs:subClassOf :Thing .
+
+
+###  http://siard.link#View
+:View rdf:type owl:Class ;
+      rdfs:subClassOf :Table ;
+      rdfs:comment "NOTE: it has to be verified if a View can be considered as a sub-class of Table." ,
+                   "Views are standard queries stored in the database. The query result is a table that also contains fields and data sets." .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

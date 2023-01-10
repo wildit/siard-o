@@ -1,0 +1,68 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix siard: <http://siard.link#> .
+
+
+###  Thing
+siard:SiardArchiveShape a sh:NodeShape ;
+    sh:targetClass siard:SiardArchive ;
+    rdfs:label "Thing" ;   
+    sh:property [    
+        sh:path siard:description ;    
+        sh:nodeKind sh:Literal  ] ;
+    sh:property [    
+        sh:path siard:name ;    
+        sh:nodeKind sh:Literal  ] ;
+.
+
+
+
+###  SiardArchive
+siard:SiardArchiveShape a sh:NodeShape ;
+    sh:targetClass siard:SiardArchive ;
+    rdfs:label "SiardArchive" ;   
+    rdfs:comment "A SIARD (Structured Information ARchiving and Retrieval Dataset) archive is a digital representation of a database, including its schema, data, and metadata." ;
+    sh:property [    
+        sh:path siard:hasRole ;    
+        sh:nodeKind sh:IRI  ] ;
+    sh:property [    
+        sh:path siard:hasSchema ;    
+        sh:minCount 1 ;
+        sh:nodeKind sh:IRI  ] ;
+    sh:property [    
+        sh:path siard:hasUser ;    
+        sh:nodeKind sh:IRI  ] ;
+
+
+    .
+
+
+
+
+
+<http://www.example.com/siard#SIARDArchiveShape> a sh:NodeShape ;
+  rdfs:label "SIARD Archive Shape" ;
+  sh:targetClass siard:SIARDArchive ;
+  sh:property [    sh:path siard:hasDatabase ;    sh:minCount 1 ;    sh:nodeKind sh:IRI  ] .
+
+<http://www.example.com/siard#DatabaseShape> a sh:NodeShape ;
+  rdfs:label "Database Shape" ;
+  sh:targetClass siard:Database ;
+  sh:property [    sh:path siard:hasTable ;    sh:minCount 1 ;    sh:nodeKind sh:IRI  ] .
+
+<http://www.example.com/siard#TableShape> a sh:NodeShape ;
+  rdfs:label "Table Shape" ;
+  sh:targetClass siard:Table ;
+  sh:property [    sh:path siard:hasColumn ;    sh:minCount 1 ;    sh:nodeKind sh:IRI  ] .
+
+<http://www.example.com/siard#ColumnShape> a sh:NodeShape ;
+  rdfs:label "Column Shape" ;
+  sh:targetClass siard:Column ;
+  sh:property [    sh:path siard:hasDataType ;    sh:minCount 1 ;    sh:nodeKind sh:Literal  ] .
+
+<http://www.example.com/siard#RowShape> a sh:NodeShape ;
+  rdfs:label "Row Shape" ;
+  sh:targetClass siard:Row ;
+  sh:property [    sh:path siard:hasValue ;    sh:minCount 1 ;    sh:nodeKind sh:Literal  ] .

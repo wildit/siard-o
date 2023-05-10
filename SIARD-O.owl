@@ -100,6 +100,12 @@
                rdfs:comment "Connects a Table to a Primary Key" .
 
 
+###  http://siard.link#hasReferencedRow
+:hasReferencedRow rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :isRelatedTo ;
+                  rdfs:domain :Row .
+
+
 ###  http://siard.link#hasRole
 :hasRole rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :isRelatedTo ;
@@ -458,6 +464,13 @@
               rdfs:domain :ForeignKey .
 
 
+###  http://siard.link#value
+:value rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain :Cell ;
+       rdfs:comment "value of a cell" .
+
+
 ###  http://siard.link#version
 :version rdf:type owl:DatatypeProperty ;
          rdfs:domain :SiardArchive ;
@@ -500,6 +513,11 @@
 :PrimaryKey rdf:type owl:Class ;
             rdfs:subClassOf :Key ;
             rdfs:comment "Primary key is defined as a unique key that identifies a record." .
+
+
+###  http://siard.link#Reference
+:Reference rdf:type owl:Class ;
+           rdfs:subClassOf :Thing .
 
 
 ###  http://siard.link#Role
